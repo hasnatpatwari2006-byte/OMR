@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123b66">
+<title>Self-practice</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f3f6fb; --panel:#fff; --text:#182230; --muted:#64748b;
+  --line:#d7e0eb; --primary:#175cd3; --primary-dark:#1247a8;
+  --good:#16803c; --good-bg:#e9f8ee; --bad:#c62828; --bad-bg:#fff0f0;
+  --ink:#173d69; --shadow:0 8px 24px rgba(24,48,80,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Noto Sans Bengali","Kalpurush","SolaimanLipi",system-ui,sans-serif;line-height:1.5}
+.wrap{width:min(100% - 24px,900px);margin:0 auto;padding:18px 0 24px}
+header{margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:14px}
+.app-logo{width:72px;height:72px;object-fit:contain;border-radius:10px;background:#fff}
+h1{font-size:1.45rem;margin:0 0 4px;color:#123b66}
+.subtitle{color:var(--muted);font-size:.92rem;margin:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0;box-shadow:var(--shadow)}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:flex;flex-direction:column;gap:6px;color:var(--muted);font-size:.88rem}
+input,select{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);font:inherit;font-size:1rem}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+button{font:inherit;cursor:pointer;touch-action:manipulation}
+.btn{border:1px solid var(--primary);border-radius:10px;background:var(--primary);color:#fff;padding:10px 15px;font-weight:650}
+.btn:hover{background:var(--primary-dark)}
+.btn.secondary{background:#fff;color:var(--primary)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.hint{font-size:.85rem;color:var(--muted);margin:12px 0 0}
+.status{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.88rem;margin-bottom:12px}
+.sheet-title{font-weight:750;font-size:1.1rem;color:#123b66;margin:0 0 4px}
+.questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.question{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}
+.qnumber{font-weight:750;color:#123b66}
+.answer-options{display:flex;gap:8px;flex-wrap:wrap}
+.bubble{width:38px;height:38px;border-radius:50%;border:1.5px solid #9aabc0;background:#fff;color:#24364b;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.bubble.selected{background:#123b66;color:#fff;border-color:#123b66}
+.bubble:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #91baff;outline-offset:2px}
+.badge{font-size:.75rem;padding:3px 8px;border-radius:20px;background:#edf2f7;color:#536274}
+.review-list{display:grid;gap:10px}
+.review-row{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}
+.review-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.review-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.mark{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:9px;padding:8px 12px}
+.mark.correct.active{background:var(--good-bg);border-color:var(--good);color:var(--good);font-weight:750}
+.mark.wrong.active{background:var(--bad-bg);border-color:var(--bad);color:var(--bad);font-weight:750}
+.result-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.result-card{padding:14px 8px;border-radius:12px;text-align:center;background:#f2f6fb;border:1px solid var(--line)}
+.result-card strong{display:block;font-size:1.6rem}
+.result-card span{font-size:.82rem;color:var(--muted)}
+.result-card.good strong{color:var(--good)}.result-card.bad strong{color:var(--bad)}
+.result-card.pending strong{color:#9a6700}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:20px 8px 4px}
+.copyright{text-align:center;color:var(--muted);font-size:.72rem;padding:2px 8px 8px}.copyright a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media(min-width:620px){.controls{grid-template-columns:repeat(3,minmax(0,1fr))}.panel{padding:20px}}
+@media(max-width:420px){.wrap{width:min(100% - 16px,900px);padding-top:12px}h1{font-size:1.25rem}.panel{padding:12px}.bubble{width:35px;height:35px}.result-card strong{font-size:1.35rem}.app-logo{width:58px;height:58px}.brand{gap:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img class="app-logo" src="profile_logo.png" alt="Self-practice logo">
+      <div><h1>Self-practice</h1>
+      <p class="subtitle">নিজে পরীক্ষা দাও, বইয়ের সঙ্গে উত্তর মিলিয়ে নিজের ফলাফল নির্ণয় করো।</p></div>
+    </div>
+  </header>
+
+  <section class="panel" id="setupPanel">
+    <div class="controls">
+      <label>শুরুর প্রশ্ন নম্বর
+        <input id="startQ" type="number" min="1" max="500" value="1" inputmode="numeric">
+      </label>
+      <label>শেষের প্রশ্ন নম্বর
+        <input id="endQ" type="number" min="1" max="500" value="60" inputmode="numeric">
+      </label>
+      <label>অপশনের ধরন
+        <select id="optionLabels">
+          <option value="en">A, B, C, D</option>
+          <option value="bn">ক, খ, গ, ঘ</option>
+        </select>
+      </label>
+    </div>
+    <div class="actions">
+      <button class="btn" id="startBtn" type="button">পরীক্ষা তৈরি করুন</button>
+      <button class="btn secondary" id="resetBtn" type="button">নতুন করে শুরু</button>
+    </div>
+    <p class="hint">ডিফল্ট প্রশ্নের রেঞ্জ ১–৬০। উদাহরণ: ২০ থেকে ৫০ দিলে ওই প্রশ্নগুলোই তৈরি হবে।</p>
+  </section>
+
+  <section id="examPanel" class="panel hidden">
+    <div class="status"><span id="rangeLabel">প্রশ্ন ১–৬০</span><span id="answeredCount">উত্তর: ০/৬০</span></div>
+    <h2 class="sheet-title">উত্তর নির্বাচন করো</h2>
+    <p class="hint" style="margin:0 0 14px">প্রতি প্রশ্নে একটি অপশন নির্বাচন করা যাবে। চাইলে নির্বাচিত অপশনে আবার চাপ দিয়ে উত্তর মুছে দিতে পারো।</p>
+    <div id="questions" class="questions"></div>
+    <div class="actions">
+      <button class="btn" id="submitBtn" type="button">পরীক্ষা সাবমিট করুন</button>
+    </div>
+    <p class="hint">সাবমিট করলে উত্তর আর পরিবর্তন করা যাবে না; এরপর বইয়ের সঙ্গে মিলিয়ে সঠিক/ভুল চিহ্নিত করতে পারবে।</p>
+  </section>
+
+  <section id="reviewPanel" class="panel hidden">
+    <h2 class="sheet-title">বইয়ের সঙ্গে উত্তর মিলিয়ে দেখো</h2>
+    <p class="hint" style="margin:0 0 14px">শুধু যেসব প্রশ্নের উত্তর মিলাতে চাও, সেগুলো নির্বাচন করো। বইয়ের উত্তরই এখানে চূড়ান্ত মানদণ্ড।</p>
+    <div class="controls" style="margin-bottom:14px">
+      <label>যে প্রশ্ন পর্যন্ত উত্তর মিলাবে
+        <input id="reviewCount" type="number" min="1" value="60" inputmode="numeric">
+      </label>
+    </div>
+    <div id="reviewList" class="review-list"></div>
+    <div class="actions">
+      <button class="btn" id="finishReviewBtn" type="button">OK — ফলাফল দেখুন</button>
+    </div>
+    <p class="hint">যে প্রশ্নগুলো যাচাই করোনি, সেগুলো আলাদা করে অযাচাইকৃত হিসেবে দেখানো হবে।</p>
+  </section>
+
+  <section id="resultPanel" class="panel hidden" aria-live="polite">
+    <h2 class="sheet-title">তোমার ফলাফল</h2>
+    <p id="resultRange" class="hint" style="margin:0 0 14px"></p>
+    <div class="result-grid">
+      <div class="result-card good"><strong id="correctTotal">০</strong><span>সঠিক (+১)</span></div>
+      <div class="result-card bad"><strong id="wrongTotal">০</strong><span>ভুল (−০.২৫)</span></div>
+      <div class="result-card"><strong id="blankTotal">০</strong><span>ব্ল্যাঙ্ক (০)</span></div>
+      <div class="result-card pending"><strong id="pendingTotal">০</strong><span>যাচাই বাকি</span></div>
+      <div class="result-card"><strong id="scoreTotal">০</strong><span>প্রাপ্ত নম্বর</span></div>
+    </div>
+    <p id="resultSummary" class="hint"></p>
+    <div class="actions">
+      <button class="btn" id="againBtn" type="button">আবার পরীক্ষা দাও</button>
+      <button class="btn secondary" id="editReviewBtn" type="button">উত্তর যাচাইয়ে ফিরে যাও</button>
+    </div>
+  </section>
+
+  <footer>লক্ষ্যে এগিয়ে চলো—প্রতিটি অনুশীলন তোমাকে আরও প্রস্তুত করে।</footer>
+  <div class="copyright">Developed by <a href="https://facebook.com/ur.hasnat" rel="noopener noreferrer">Hasnat</a> and all copyright reserved</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const labels = {en:["A","B","C","D"], bn:["ক","খ","গ","ঘ"]};
+  let start = 1, end = 60, options = labels.en, answers = {}, marks = {};
+  let submitted = false, finished = false;
+
+  const bn = n => String(n).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[Number(d)]);
+  function show(id, yes){ $(id).classList.toggle("hidden", !yes); }
+  function getRange(){
+    const s = Number.parseInt($("startQ").value, 10);
+    const e = Number.parseInt($("endQ").value, 10);
+    if(!Number.isInteger(s) || !Number.isInteger(e) || s < 1 || e < s || e > 500){
+      alert("প্রশ্ন নম্বর সঠিকভাবে দাও। শুরুর নম্বর ১ বা তার বেশি এবং শেষের নম্বর ৫০০ বা তার কম হতে হবে।");
+      return null;
+    }
+    return {s,e};
+  }
+  function updateAnswered(){
+    const total = end - start + 1;
+    const count = Object.keys(answers).length;
+    $("answeredCount").textContent = "উত্তর: " + bn(count) + "/" + bn(total);
+  }
+  function makeExam(){
+    const range = getRange();
+    if(!range) return;
+    start = range.s; end = range.e;
+    options = labels[$("optionLabels").value] || labels.en;
+    answers = {}; marks = {}; submitted = false; finished = false;
+    $("rangeLabel").textContent = "প্রশ্ন " + bn(start) + "–" + bn(end);
+    const host = $("questions");
+    host.textContent = "";
+    const frag = document.createDocumentFragment();
+    for(let q = start; q <= end; q++){
+      const card = document.createElement("div"); card.className = "question";
+      const head = document.createElement("div"); head.className = "qhead";
+      const number = document.createElement("span"); number.className = "qnumber"; number.textContent = "প্রশ্ন " + bn(q);
+      const badge = document.createElement("span"); badge.className = "badge"; badge.textContent = "উত্তর বাকি";
+      badge.id = "badge-" + q;
+      head.append(number,badge);
+      const opts = document.createElement("div"); opts.className = "answer-options";
+      options.forEach(opt => {
+        const b = document.createElement("button"); b.type = "button"; b.className = "bubble"; b.textContent = opt;
+        b.setAttribute("aria-label", "প্রশ্ন " + q + ", উত্তর " + opt);
+        b.addEventListener("click", () => {
+          if(submitted) return;
+          if(answers[q] === opt) delete answers[q]; else answers[q] = opt;
+          opts.querySelectorAll(".bubble").forEach(btn => btn.classList.toggle("selected", answers[q] === btn.textContent));
+          badge.textContent = answers[q] ? "উত্তর দেওয়া" : "উত্তর বাকি";
+          updateAnswered();
+        });
+        opts.appendChild(b);
+      });
+      card.append(head,opts); frag.appendChild(card);
+    }
+    host.appendChild(frag);
+    show("setupPanel", false); show("examPanel", true); show("reviewPanel", false); show("resultPanel", false);
+    updateAnswered(); window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function submitExam(){
+    if(submitted) return;
+    const unanswered = (end - start + 1) - Object.keys(answers).length;
+    if(unanswered > 0 && !confirm("তুমি " + bn(unanswered) + "টি প্রশ্ন ব্ল্যাঙ্ক রেখেছ। এগুলোর উত্তর মিলাতে হবে না এবং এগুলোতে ০ নম্বর হবে। তবুও সাবমিট করবে?")) return;
+    submitted = true;
+    $("questions").querySelectorAll("button").forEach(b => b.disabled = true);
+    const host = $("reviewList"); host.textContent = "";
+    const frag = document.createDocumentFragment();
+    let answered = 0;
+    for(let q = start; q <= end; q++){
+      // Blank questions are excluded from answer checking and automatically receive 0.
+      if(!answers[q]) continue;
+      answered++;
+      const row = document.createElement("div"); row.className = "review-row";
+      const top = document.createElement("div"); top.className = "review-top";
+      const qtext = document.createElement("strong"); qtext.textContent = "প্রশ্ন " + bn(q);
+      const ans = document.createElement("span"); ans.textContent = "তোমার উত্তর: " + answers[q];
+      top.append(qtext,ans);
+      const btns = document.createElement("div"); btns.className = "review-buttons";
+      const correct = document.createElement("button"); correct.type = "button"; correct.className = "mark correct"; correct.textContent = "✓ সঠিক (+১)";
+      const wrong = document.createElement("button"); wrong.type = "button"; wrong.className = "mark wrong"; wrong.textContent = "✕ ভুল (−০.২৫)";
+      function setMark(value){
+        marks[q] = value;
+        correct.classList.toggle("active", value === "correct");
+        wrong.classList.toggle("active", value === "wrong");
+      }
+      correct.addEventListener("click", () => setMark("correct"));
+      wrong.addEventListener("click", () => setMark("wrong"));
+      btns.append(correct,wrong); row.append(top,btns); frag.appendChild(row);
+    }
+    host.appendChild(frag);
+    if(answered === 0){
+      host.textContent = "তুমি কোনো প্রশ্নের উত্তর দাওনি। সব প্রশ্ন ব্ল্যাঙ্ক হিসেবে গণ্য হবে এবং নম্বর হবে ০।";
+    }
+    show("examPanel", false); show("reviewPanel", true); show("resultPanel", false);
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function finishReview(){
+    let correct = 0, wrong = 0, unchecked = 0;
+    const total = end - start + 1;
+    const answered = Object.keys(answers).length;
+    const blank = total - answered;
+    for(let q = start; q <= end; q++){
+      if(!answers[q]) continue; // blank: no checking, zero marks
+      if(marks[q] === "correct") correct++;
+      else if(marks[q] === "wrong") wrong++;
+      else unchecked++;
+    }
+    const score = correct - wrong * 0.25;
+    $("correctTotal").textContent = bn(correct);
+    $("wrongTotal").textContent = bn(wrong);
+    $("blankTotal").textContent = bn(blank);
+    $("pendingTotal").textContent = bn(unchecked);
+    $("scoreTotal").textContent = bn(Number(score.toFixed(2)));
+    $("resultRange").textContent = "প্রশ্ন " + bn(start) + "–" + bn(end) + " | মোট " + bn(total) + "টি প্রশ্ন";
+    let summary = "হিসাব: সঠিক " + bn(correct) + " × ১ − ভুল " + bn(wrong) + " × ০.২৫ = " + bn(Number(score.toFixed(2))) + " নম্বর। ব্ল্যাঙ্ক প্রশ্নে ০ নম্বর।";
+    if(unchecked > 0) summary += " আরও " + bn(unchecked) + "টি উত্তর যাচাই করা বাকি; সেগুলো যাচাই করলে নম্বর চূড়ান্ত হবে।";
+    else summary += " সব দেওয়া উত্তর যাচাই সম্পন্ন হয়েছে।";
+    $("resultSummary").textContent = summary;
+    finished = true;
+    show("examPanel", false); show("reviewPanel", false); show("resultPanel", true);
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function backToReview(){
+    show("resultPanel", false); show("reviewPanel", true);
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  function reset(){
+    if((Object.keys(answers).length || submitted) && !confirm("নতুন করে শুরু করলে বর্তমান পরীক্ষার উত্তর ও ফলাফল মুছে যাবে। এগোবে?")) return;
+    answers = {}; marks = {}; submitted = false; finished = false;
+    show("setupPanel", true); show("examPanel", false); show("reviewPanel", false); show("resultPanel", false);
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+  $("startBtn").addEventListener("click", makeExam);
+  $("submitBtn").addEventListener("click", submitExam);
+  $("finishReviewBtn").addEventListener("click", finishReview);
+  $("againBtn").addEventListener("click", reset);
+  $("resetBtn").addEventListener("click", reset);
+  $("editReviewBtn").addEventListener("click", backToReview);
+})();
+</script>
+</body>
+</html>
